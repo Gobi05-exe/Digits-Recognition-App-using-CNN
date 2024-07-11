@@ -9,6 +9,4 @@ drawing area must have three buttons: draw, clear, submit
 
 draw -> we can draw the digit
 clear -> clears the canvas 
-submit -> submits the drawing and makes the prediction 
-
-the prediction is displayed on a new window. if prediction is correct, save the image to the training data directory. the model will be retrained with the new image included.
+submit -> submits the drawing and shows the prediction 
