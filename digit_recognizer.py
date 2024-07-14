@@ -2,6 +2,8 @@
 import tkinter as tk
 from io import BytesIO
 from PIL import Image
+import numpy as np
+
 class Digit_Recognizer:
     def __init__(self,root):
         #defining root window
@@ -50,17 +52,34 @@ class Digit_Recognizer:
         
     #submit button action
     def submit(self):
-        ps_img=self.canvas.postscript()
-        img=Image.open(BytesIO(ps_img.encode('utf-8')))
-        img.save('img.jpg')
+        ps_img=self.canvas.postscript(colormode='gray') #getting the image from the canvas and converting it to a postscript file
+        img=Image.open(BytesIO(ps_img.encode('utf-8'))) #encoding the image to binary data
+        img.save('temp/img.jpg') #saving the image as a jpg file
+        img=Image.open('temp/img.jpg') #opening the image as an Image object
+
+    
+    
+        
+    #creates a pop-up and displays the result    
+    def display_result(self):
+        pass
         
         
 #CNN model to recognize the digit
 class Conv_Neural_Network:
-    def __init__(self,img_ps):
-        pass
+    #preprocesses the image
+    def __init__(self,inp_img):
+        self.inp_img=inp_img
+        self.inp_img=self.inp_img.resize((28,28))
+        self.inp_img=np.expand_dims(self.inp_img,axis=0)
 
-    def get_digit(self):
+    #trains the model if it is not done already
+    def get_model(self):
+        #make new attribute self.model
+        pass
+    
+    def predict_digit(self):
+        #make the prediction and return the digit
         pass
         
 if __name__=='__main__':
