@@ -1,7 +1,7 @@
 #importing libraries
 import tkinter as tk
-from PIL.ImageOps import invert
-
+from io import BytesIO
+from PIL import Image
 class Digit_Recognizer:
     def __init__(self,root):
         #defining root window
@@ -48,8 +48,19 @@ class Digit_Recognizer:
     def stop_drawing(self,event):
         self.drawing=False
         
-    
+    #submit button action
     def submit(self):
+        ps_img=self.canvas.postscript()
+        img=Image.open(BytesIO(ps_img.encode('utf-8')))
+        img.save('img.jpg')
+        
+        
+#CNN model to recognize the digit
+class Conv_Neural_Network:
+    def __init__(self,img_ps):
+        pass
+
+    def get_digit(self):
         pass
         
 if __name__=='__main__':
