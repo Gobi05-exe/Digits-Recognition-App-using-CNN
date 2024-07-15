@@ -16,6 +16,7 @@ class Digit_Recognizer:
         self.root.resizable(width='False',height='False')
         self.root.title('Digit Recognizer')
         self.root.configure(background='#ADB1FF')
+        self.root.iconbitmap('icon.ico')
         
         #Label above the canvas
         self.label=tk.Label(self.root,text='DRAW A DIGIT',font=('Calibri',25),bg='yellow')
@@ -31,7 +32,7 @@ class Digit_Recognizer:
         
         #defining buttons
         
-        self.clear_b=tk.Button(text='Clear',font=('Arial',15),command=lambda:self.canvas.delete("all"))
+        self.clear_b=tk.Button(text='Clear',font=('Arial',15),command=self.clear)
         self.submit_b=tk.Button(text='Submit',font=('Arial',15),command=self.submit)
         self.exit_b=tk.Button(text='Exit',font=('Arial',15),command=self.root.quit)
 
@@ -46,6 +47,9 @@ class Digit_Recognizer:
         self.canvas.bind("<B1-Motion>", self.draw)
         self.canvas.bind("<ButtonRelease-1>", self.stop_drawing)
         
+        #flag variable to denote state of the canvas
+        self.isempty=True
+        
         #getting the model
         self.model=Conv_Neural_Network()
         
@@ -55,6 +59,7 @@ class Digit_Recognizer:
         self.last_x, self.last_y = event.x, event.y
     
     def draw(self,event):
+        self.isempty=False
         if self.drawing:
             x, y = event.x, event.y
             self.canvas.create_line(self.last_x, self.last_y, x, y, fill='black', width=15,capstyle=tk.ROUND, joinstyle=tk.BEVEL)
@@ -63,14 +68,24 @@ class Digit_Recognizer:
     def stop_drawing(self,event):
         self.drawing=False 
         
+        
+    #clear button action
+    def clear(self):
+        self.canvas.delete("all")
+        self.isempty=True
+        
     #submit button action
     def submit(self):
-        ps_img=self.canvas.postscript() #getting the image from the canvas and converting it to a postscript file
-        img=Image.open(BytesIO(ps_img.encode('utf-8'))) #encoding the image to binary data
-        img.save('temp/img.jpg') #saving the image as a jpg file
-        self.img=Image.open('temp/img.jpg') #opening the image as an Image object
+        if not self.isempty:
+            ps_img=self.canvas.postscript() #getting the image from the canvas and converting it to a postscript file
+            img=Image.open(BytesIO(ps_img.encode('utf-8'))) #encoding the image to binary data
+            img.save('temp/img.jpg') #saving the image as a jpg file
+            self.img=Image.open('temp/img.jpg') #opening the image as an Image object
+            
+            self.display_digit()
         
-        self.display_digit()
+        else:
+            self.warning=messagebox.showerror(title='Error',message='Draw a digit first!')    
 
     #creates a pop-up and displays the result    
     def display_digit(self):
