@@ -6,7 +6,7 @@ from skimage.transform import resize
 model=load_model('cnn.h5')
 
 for i in range(10):
-    img = io.imread('{}.jpg'.format(i), as_gray=True)
+    #img = io.imread('{}.jpg'.format(i), as_gray=True)
     img=resize(img,(28,28))
     img=np.expand_dims(img,axis=0)
     result=model.predict(img)

@@ -1,12 +1,1 @@
-GUI using tkinter
-window has two parts: 
-1. drawing area
-2. display prediction
-
-
-
-drawing area must have three buttons: draw, clear, submit
-
-draw -> we can draw the digit
-clear -> clears the canvas 
-submit -> submits the drawing and shows the prediction 
+write code to train and save the model when run for the first time
