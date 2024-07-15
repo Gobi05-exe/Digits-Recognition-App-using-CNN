@@ -6,7 +6,7 @@ from PIL import Image
 import numpy as np
 from PIL import Image,ImageOps
 from tensorflow.keras.saving import load_model
-from os import listdir
+from os import listdir,remove
 
 class Digit_Recognizer:
     def __init__(self,root):
@@ -33,10 +33,13 @@ class Digit_Recognizer:
         
         self.clear_b=tk.Button(text='Clear',font=('Arial',15),command=lambda:self.canvas.delete("all"))
         self.submit_b=tk.Button(text='Submit',font=('Arial',15),command=self.submit)
+        self.exit_b=tk.Button(text='Exit',font=('Arial',15),command=self.root.quit)
+
         
         #placing buttons on screen
         self.clear_b.grid(row=2,column=0,pady=10)
-        self.submit_b.grid(row=2,column=2,pady=10) 
+        self.submit_b.grid(row=2,column=1,pady=10) 
+        self.exit_b.grid(row=2,column=2,pady=10)
         
         #binding mouse events
         self.canvas.bind("<Button-1>", self.start_drawing)
@@ -180,3 +183,4 @@ if __name__=='__main__':
     root=tk.Tk()
     app=Digit_Recognizer(root)
     root.mainloop()
+    remove('temp/img.jpg')

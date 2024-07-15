@@ -1,1 +1,6 @@
-write code to train and save the model when run for the first time
+create a flag that is set to true when something is drawn, and false when canvas is empty or cleared.
+
+in submit()
+if flag=False, display error to draw something
+
+else, display prediction
